@@ -23,11 +23,9 @@ The standard digital ASIC design flow consists of the following stages:
 6. Physical Verification (DRC/LVS)
 7. GDSII Generation
 
-📌 **This document covers Stage 2: RTL Simulation & Verification**
-
 ---
 
-## 🔍 Stage 2: RTL Simulation & Verification
+## 🔍RTL Simulation & Verification
 
 Before synthesis or physical design, RTL code must be:
 - Functionally correct
@@ -57,15 +55,6 @@ GTKWave is a waveform visualization tool used to:
 - View signal transitions over time
 - Debug RTL behavior
 - Analyze simulation results graphically
-
----
-
-## 🖥️ System Requirements
-
-- OS: Ubuntu 20.04 / 22.04 (Recommended)
-- Architecture: x86_64
-- Internet connection
-- Basic Linux terminal knowledge
 
 ---
 
@@ -171,5 +160,69 @@ which yosys
 
 ```bash
 /usr/bin/yosys   
+```
+---
+# 🔧Static Timing Analysis Tool Setup (OpenSTA)
+
+This section documents the installation of **OpenSTA**, the open-source **Static Timing Analysis (STA)** tool used in the RTL → GDS flow.
+
+---
+
+## 📦 Step 3.1: Install CUDD Library (Dependency)
+
+OpenSTA requires the **CUDD (Decision Diagram) library**, which must be built from source.
+
+### 🔄 Install Required Packages for CUDD
+
+```bash
+sudo apt-get update
+sudo apt-get install autoconf automake libtool
+```
+---
+### ⬇️ Clone and Build CUDD
+
+```bash
+cd ~
+git clone https://github.com/ivmai/cudd.git
+cd cudd
+autoreconf -I
+mkdir build
+cd build
+../configure --prefix=$HOME/cudd
+make
+make install
+```
+---
+### ✅ Verify CUDD Installation
+```bash
+ls $HOME/cudd
+```
+- Expected directories:
+
+```
+bin  include  lib  share
+```
+---
+### Installation of OpenSTA
+```bash
+sudo apt-get update
+sudo apt-get install build-essential tcl-dev tk-dev cmake git libeigen3-dev autoconf m4 perl automake 
+
+git clone https://github.com/The-OpenROAD-Project/OpenSTA.git
+cd OpenSTA
+cd build
+cmake .. -DUSE_CUDD=ON -DCUDD_DIR=$HOME/cudd
+make
+sudo make install
+```
+- To open the sta interactive shell (denoted by %) use
+
+```bash
+sta
+```
+- Exit the shell using:
+
+```bash
+exit   
 ```
 ---
