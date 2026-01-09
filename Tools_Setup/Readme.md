@@ -166,9 +166,9 @@ which yosys
 
 This section documents the installation of **OpenSTA**, the open-source **Static Timing Analysis (STA)** tool used in the RTL → GDS flow.
 
----
 
-## 📦 Step 3.1: Install CUDD Library (Dependency)
+
+### 📦Install CUDD Library (Dependency)
 
 OpenSTA requires the **CUDD (Decision Diagram) library**, which must be built from source.
 
